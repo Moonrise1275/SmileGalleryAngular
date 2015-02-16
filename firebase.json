@@ -1,0 +1,9 @@
+{
+  "firebase": "smilegallerytest",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

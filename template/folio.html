@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 ng-if="!isMine(folio.user)">
+            {{folio.name}}
+            <span class="glyphicon" ng-class="{'glyphicon-star':hasMe(folio.like),'glyphicon-star-empty':!hasMe(folio.like)}" ng-click="setLike(!hasMe(folio.like))"></span>
+        </h2>
+        <input ng-if="isMine(folio.user)" type="text" ng-model="folio.name" class="form-control">
+    </div>
+    <ul class="panel-body list-group">
+        <li class="list-group-item" ng-repeat="page in pages">
+            <img ng-src="{{page.image}}" class="max-width">
+            <p>{{page.text}} <span class="glyphicon glyphicon-trash" ng-if="isMine(folio.user)" ng-click="pages.$remove(page)"></span></p>
+        </li>
+        <li class="list-group-item" ng-if="isMine(folio.user)">
+            <img ng-src="{{newImage}}" class="max-width" ng-if="newImage">
+            <input type="file" sg-file-change="onFile">
+            <textarea class="form-control" rows="3" ng-model="newText"></textarea>
+            <button role="button" class="btn btn-primary" ng-click="pages.$inst().$push({image:newImage,text:newText});newImage='';newText=''">덧붙이기</button>
+        </li>
+    </ul>
+    <div class="panel-footer media no-deco">
+        <a class="media-left" ng-href="#/user/{{author.$id}}">
+            <img ng-src="{{author.image}}" class="media-object media-image">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a class="no-deco" ng-href="#/user/{{author.$id}}">{{author.nick}}</a>
+                <a href="" class="glyphicon no-deco" ng-class="{'glyphicon-star':following(author.$id),'glyphicon-star-empty':!following(author.$id)}" ng-click="$event.preventDefault();follow(!following(author.$id))"></a>
+            </h4>
+            {{author.profile}}
+        </div>
+    </div>
+</div>
+<ul class="list-group">
+    <li class="list-group-item media" ng-repeat="comment in comments" ng-controller="folioCommentCtrl">
+        <a class="media-left" ng-href="#/user/{{user.$id}}">
+            <img ng-src="{{user.image}}" class="media-object media-image">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">
+                {{user.nick}}
+                <span class="glyphicon" ng-if="!isMine(comment.user)" ng-class="{'glyphicon-star':hasMe(comment.like),'glyphicon-star-empty':!hasMe(comment.like)}" ng-click="setLike(!hasMe(comment.like))"></span>
+                <span class="glyphicon glyphicon-trash" ng-if="isMine(comment.user)" ng-click="comments.$remove(comment)"></span>
+            </h4>
+            {{comment.text}}
+        </div>
+    </li>
+    <li class="list-group-item row">
+        <div class="col-sm-10">
+            <input type="text" ng-model="newComment" class="form-control">
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-block btn-primary" ng-click="addComment(newComment)">댓글달기</button>
+        </div>
+    </li>
+</ul>

@@ -1,0 +1,22 @@
+<div class="row">
+    <a class="no-deco col-sm-3" href="" ng-click="createFolio()">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                New folio
+            </div>
+        </div>
+    </a>
+    <a class="no-deco col-sm-3" ng-repeat="folio in folios" ng-href="#/folio/{{folios.$keyAt(folio)}}">
+        <div class="panel panel-default" ng-controller="folioListElemCtrl">
+            <div class="panel-heading">
+                <p class="text-center">{{folio.name}}</p>
+            </div>
+            <img class="panel-body no-border full-width" ng-src="{{pages[0].image}}">
+            <div class="panel-footer text-center">
+                <span class="pull-left glyphicon" ng-class="{'glyphicon-star':hasMe(folio.like)&&!isMine(),'glyphicon-star-empty':!hasMe(folio.like)&&!isMine(),'glyphicon-trash':isMine()}" ng-click="isMine()?folios.$remove(folio):setLike(!hasMe(folio.like));$event.preventDefault()"></span>
+                {{artist.nick}}
+                <span class="badge pull-right">{{getSize(folio.like)}}</span>
+            </div>
+        </div>
+    </a>
+</div>

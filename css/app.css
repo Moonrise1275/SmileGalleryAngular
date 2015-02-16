@@ -1,0 +1,18 @@
+a.no-deco{
+    color: #000000;
+    text-decoration: none;
+}
+.media-image{
+    max-width: 500px;
+}
+.no-border{
+    margin: 0;
+    padding: 0;
+}
+.full-width{
+    width: 100%;
+    max-width: 100%;
+}
+.max-width{
+    max-width: 100%;
+}
