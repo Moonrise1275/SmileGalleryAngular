@@ -30,10 +30,10 @@ angular.module('app.factory', ['firebase', 'ngImgur'])
                     password : password
                 }).then(function(authData) {
                     self.auth = $firebase(firebase.child('user').child(authData.uid)).$asObject();
-                    self.auth.$loaded().then(function(authData) {
-                        if (!authData.nick) {
+                    self.auth.$loaded().then(function(auth) {
+                        if (!auth.nick) {
                             firebase.child('user').child(authData.uid).set({
-                                nick : authData.facebook ? authData.facebook.displayName : 'John',
+                                nick : authData.password ? authData.password.email : 'John',
                                 image : 'http://smig.azurewebsites.net/ArtWork/Image/1249?size=300',
                                 profile : '한줄 소개가 없습니다.'
                             });
@@ -51,10 +51,10 @@ angular.module('app.factory', ['firebase', 'ngImgur'])
                 var self = this;
                 agent.$authWithOAuthPopup('twitter').then(function(authData) {
                     self.auth = $firebase(firebase.child('user').child(authData.uid)).$asObject();
-                    self.auth.$loaded().then(function(authData) {
-                        if (!authData.nick) {
+                    self.auth.$loaded().then(function(auth) {
+                        if (!auth.nick) {
                             firebase.child('user').child(authData.uid).set({
-                                nick : authData.facebook ? authData.facebook.displayName : 'John',
+                                nick : authData.twitter ? authData.twitter.displayName : 'John',
                                 image : 'http://smig.azurewebsites.net/ArtWork/Image/1249?size=300',
                                 profile : '한줄 소개가 없습니다.'
                             });

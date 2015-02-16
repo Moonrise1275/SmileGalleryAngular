@@ -108,6 +108,7 @@ angular.module('app.controller', ['app.factory', 'firebase'])
 
 .controller('folioCommentCtrl', function($scope, $firebase, firebase, sgAuth) {
         $firebase(firebase.child('user').child($scope.comment.user)).$asObject().$bindTo($scope, 'user');
+        $scope.likes = $firebase($scope.comments.$inst().$ref().child($scope.comments.$keyAt($scope.comment)).child('like')).$asArray();
         $scope.setLike = function(like) {
             if (!sgAuth.auth) return;
             var key = $scope.comments.$keyAt($scope.comment);
@@ -121,7 +122,6 @@ angular.module('app.controller', ['app.factory', 'firebase'])
     })
 
 .controller('userCtrl', function($scope, $location, $routeParams, $firebase, firebase, sgAuth) {
-
         var userRef = firebase.child('user').child($routeParams.userId);
         $firebase(userRef).$asObject().$bindTo($scope, 'user');
         $scope.isMe = function() {
@@ -129,8 +129,24 @@ angular.module('app.controller', ['app.factory', 'firebase'])
         }
         $scope.followers = $firebase(userRef.child('follower')).$asArray();
         $scope.followings = $firebase(userRef.child('following')).$asArray();
-
-        $scope.folios = $firebase(firebase.child('folio').orderByChild('user').equalTo($scope.user ? $scope.user.$id : 'facebook:1600457813500744')).$asArray();
+        $scope.follow = function(id) {
+            if (!sgAuth.auth) return;
+            var time = new Date().getTime();
+            sgAuth.auth.$inst().$ref().child('following').child(id).set(time);
+            userRef.child('follower').child(sgAuth.auth.$id).set(time);
+        }
+        $scope.unfollow = function(id) {
+            if (!sgAuth.auth) return;
+            sgAuth.auth.$inst().$ref().child('following').child(id).remove();
+            userRef.child('follower').child(sgAuth.auth.$id).remove();
+        }
+        $scope.following = function(id) {
+            return sgAuth.auth && sgAuth.auth.following && sgAuth.auth.following[id];
+        }
+        $scope.isMe = function() {
+            return sgAuth.auth && (sgAuth.auth.$id === $routeParams.userId);
+        }
+        $scope.folios = $firebase(firebase.child('folio').orderByChild('user').equalTo($routeParams.userId)).$asArray();
         $scope.createFolio = function() {
             if (!sgAuth.auth) return;
             var newFolioId = firebase.child('folio').push({

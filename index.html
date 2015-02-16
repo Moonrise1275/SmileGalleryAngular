@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/app.css">
-    <!--link rel="stylesheet" href="/SmileGalleryCustom/lib/bootstrap.min.css">
-    <link rel="stylesheet" href="/SmileGalleryCustom/lib/bootstrap-theme.min.css"-->
 </head>
 <body ng-app="app">
 
@@ -37,7 +35,7 @@
                 <li ng-if="auth">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#/info">Info</a></li>
+                        <li><a href="#/user/{{auth.$id}}">Info</a></li>
                         <li><a href="" ng-click="unAuth()">Logout</a></li>
                     </ul>
                 </li>

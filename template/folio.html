@@ -41,6 +41,7 @@
                 {{user.nick}}
                 <span class="glyphicon" ng-if="!isMine(comment.user)" ng-class="{'glyphicon-star':hasMe(comment.like),'glyphicon-star-empty':!hasMe(comment.like)}" ng-click="setLike(!hasMe(comment.like))"></span>
                 <span class="glyphicon glyphicon-trash" ng-if="isMine(comment.user)" ng-click="comments.$remove(comment)"></span>
+                <span class="badge">{{likes.length}}</span>
             </h4>
             {{comment.text}}
         </div>

@@ -1,13 +1,13 @@
 <div class="row">
-    <div class="col-sm-3" sg-auth-checker>
+    <div class="col-sm-3">
         <img class="max-width" ng-src="{{user.image}}">
         <input type="text" ng-if="user.$id===auth.$id" class="form-control" ng-model="user.image">
         <h4 ng-if="user.$id!==auth.$id">{{user.nick}}</h4>
         <input type="text" ng-if="user.$id===auth.$id" class="form-control" ng-model="user.nick">
         <p ng-if="user.$id!==auth.$id">{{user.profile}}</p>
         <textarea ng-if="user.$id===auth.$id" class="form-control" ng-model="user.profile"></textarea>
-        <button class="btn btn-block btn-primary" ng-if="user.$id!==auth.$id&&!following()" ng-click="follow(user.$id)">따라가기</button>
-        <button class="btn btn-block btn-danger" ng-if="user.$id!==auth.$id&& following()" ng-click="unfollow(user.$id)">그만 따라가기</button>
+        <button class="btn btn-block btn-primary" ng-if="!isMe()&&!following(user.$id)" ng-click="follow(user.$id)">따라가기</button>
+        <button class="btn btn-block btn-danger" ng-if="!isMe()&&following(user.$id)" ng-click="unfollow(user.$id)">그만 따라가기</button>
         따라옴 : <span class="badge">{{followers.length}}</span><br>
         따라감 : <span class="badge">{{followings.length}}</span><br>
     </div>
